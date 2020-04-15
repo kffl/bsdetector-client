@@ -1,0 +1,21 @@
+{
+	"eslint.format.enable": true,
+	"editor.formatOnSave": true,
+	"editor.codeActionsOnSave": {
+		"source.fixAll": true
+	},
+	"vetur.validation.template": false,
+	"eslint.validate": ["javascript", "javascriptreact", "vue"],
+	"eslint.alwaysShowStatus": true,
+	"eslint.run": "onSave",
+	"[vue]": {
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
+	},
+	"editor.insertSpaces": false,
+	"editor.tabSize": 2,
+	"prettier.endOfLine": "crlf",
+	"prettier.printWidth": 140,
+	"prettier.singleQuote": true,
+	"prettier.tabWidth": 4,
+	"prettier.useTabs": true
+}
