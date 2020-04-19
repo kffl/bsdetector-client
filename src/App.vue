@@ -1,10 +1,16 @@
 <template lang='pug'>
 	v-app
-		v-app-bar
+		v-app-bar(app, color='green', dark, dense)
+			v-toolbar-title JavaScript Bad Smells Detector
+			v-spacer
+			v-btn(to='/editor', text) Code editor
+			v-btn(to='/', text) Home page
+
 		v-content
-			v-containter(fluid)
+			v-container(class='fill-height', fluid)
 				router-view
-		v-footer
+
+		v-footer(app, absolute, class='font-weight-light justify-center') JavaScript Bad Smells Detector - Paweł Kuffel, Bartosz Paulewicz, Tomasz Pućka, Marcin Rochowiak
 </template>
 
 <script>
