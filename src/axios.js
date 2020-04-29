@@ -1,7 +1,7 @@
 import axios from 'axios';
-console.log(process.env);
+
 export const api = axios.create({
-	baseURL: process.env.VUE_APP_BACKEND_ADDR,
+	baseURL: process.env.VUE_APP_REQUESTS_BASE_URL,
 	headers: {
 		'content-type': 'application/json',
 	},

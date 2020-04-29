@@ -1,13 +1,15 @@
 <template lang='pug'>
-	v-expansion-panels(v-if='!!detectorResult', multiple, hover, :value='expandedPanels')
-		v-expansion-panel(v-for='(smell, i) in detectorResult.smellsDetected', :key='i')
-			v-expansion-panel-header(color='#FAFAFA', ripple)
+	v-expansion-panels(v-if='detectedSmells.length', multiple, hover, :value='expandedPanels')
+		v-expansion-panel(v-for='(smell, i) in detectedSmells', :key='i')
+			v-expansion-panel-header(color='grey lighten-5', ripple)
 				span(class='subtitle-1 font-weight-medium') {{ smell.smellName.toUpperCase() }}
 			v-expansion-panel-content
 				p(class='mt-2 mb-4 grey--text text--darken-1') {{ smell.smellDescription }}
 				h6(class='title font-weight-regular') Occurrences
 				v-card(v-for='(occurrence, j) in smell.occurrences', :key='j', class='occurrence-container grey lighten-4 px-2', outlined, tile)
 					code(class='occurrence-snippet font-weight-medium') {{ occurrence.snippet }}
+	v-card(v-else-if='!!detectorResult')
+		v-card-text(class='title font-weight-regular text--primary') No smells detected! Your code is clean.
 
 </template>
 
@@ -23,12 +25,14 @@ export default {
 	},
 
 	data: () => ({
+		detectedSmells: [],
 		expandedPanels: [],
 	}),
 
 	watch: {
 		detectorResult: function () {
-			this.expandedPanels = [...Array(this.detectorResult.smellsDetected.length).keys()];
+			this.detectedSmells = this.detectorResult.smellsDetected.filter((smell) => smell.occurrences.length);
+			this.expandedPanels = [...Array(this.detectedSmells.length).keys()];
 		},
 	},
 };

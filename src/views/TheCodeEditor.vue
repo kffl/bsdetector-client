@@ -14,12 +14,12 @@
 				placeholder='Write your code here...',
 				:rules='codeEditorRules',
 				)
-			v-btn(color='green', dark, large, @click='detectSmells') Detect code smells
+			v-btn(color='green', dark, large, :loading='isLoading', @click='detectSmells') Detect code smells
 
 			h3(v-show='!!detectorResult', class='headline font-weight-regular mt-8 mb-1 align-self-start') Detected code smells
 			base-smells-expansion-panels(ref='smellsAccordion', :detectorResult='detectorResult')
 
-		v-snackbar(v-model='snackbar.visibility', :timeout='snackbar.timeout', absolute, top, right, color='error')
+		v-snackbar(v-model='snackbar.visibility', :timeout='snackbar.timeout', top, right, color='error')
 			| {{ snackbar.message ? snackbar.message : 'Error! Code smells detection failed.' }}
 </template>
 
@@ -38,6 +38,7 @@ export default {
 			message: '',
 			timeout: 4000,
 		},
+		isLoading: false,
 	}),
 
 	watch: {
@@ -49,6 +50,8 @@ export default {
 	methods: {
 		detectSmells () {
 			if (!this.code) return;
+			this.isLoading = true;
+
 			api.post('analyze', {
 				code: this.code,
 			}).then(res => {
@@ -56,10 +59,9 @@ export default {
 				this.$nextTick(() => { this.$refs.smellsAccordion.$el.scrollIntoView({ behavior: 'smooth' }); });
 			}).catch(err => {
 				this.snackbar.visibility = true;
-				// TODO: create more advanced mechanism of handling errors
-				if (!err.response.data.errors) return;
-				this.snackbar.message = 'Smells detection error!';
-			});
+				const data = err.response.data;
+				if (data.message) this.snackbar.message = `Error! ${data.message}.`;
+			}).then(() => { this.isLoading = false; });
 		},
 	},
 };
