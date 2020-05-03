@@ -9,6 +9,7 @@ export const router = new VueRouter({
 		{ path: '/', component: TheLandingPage },
 		{ path: '/editor', component: TheCodeEditor },
 		{ path: '/upload', component: TheCodeUploader },
+		{ path: '/knowledge-base', component: TheKnowledgeBase },
 		{ path: '/knowledge-base/:slug', component: TheKnowledgeBase },
 	],
 });
