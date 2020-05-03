@@ -6,3 +6,10 @@ export const api = axios.create({
 		'content-type': 'application/json',
 	},
 });
+
+export const fetchContent = (slug) => (axios.create({
+	baseURL: `/docs/${slug}.md`,
+	headers: {
+		'content-type': 'application/json',
+	},
+}));
