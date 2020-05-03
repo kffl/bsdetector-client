@@ -75,7 +75,7 @@ export default {
 			this.isLoading = true;
 
 			const formData = new FormData();
-			this.files.forEach((file, i) => { formData.append('code', file); });
+			this.files.forEach((file) => { formData.append('code', file); });
 			api.post('analyzemultipart', formData, { headers: { 'content-type': 'multipart/form-data' } }).then(res => {
 				this.detectorResult = res.data;
 				this.$nextTick(() => { this.$refs.smellsContainer.scrollIntoView({ behavior: 'smooth' }); });
@@ -90,6 +90,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '../styles/common';
+
 $drop-area-margin-y: 12px;
 $drop-area-margin-x: 24px;
 

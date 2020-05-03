@@ -10,7 +10,7 @@
 			v-expansion-panel-content(class='pt-4')
 				p(v-if="fileSmells.error", class='title font-weight-regular ma-0')
 					| Error! {{ fileSmells.error.message ? fileSmells.error.message : 'Code smells detection failed.' }}.
-				base-smells-expansion-panels(v-else, :detectorResult='fileSmells')
+				base-smells-expansion-panels(v-else, :detectorResult='fileSmells', :use-container-for-clean-code='false')
 
 </template>
 
