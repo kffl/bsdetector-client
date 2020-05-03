@@ -1,11 +1,16 @@
 <template lang='pug'>
 	v-expansion-panels(multiple, hover, :value='expandedPanels')
-		v-expansion-panel(v-for='(fileSmells, i) in detectorResult', :key='i', :class="{ 'file-expansion-panel': i < detectorResult.length - 1}")
+		v-expansion-panel(
+			v-for='(fileSmells, i) in detectorResult',
+			:key='i',
+			:class="{ 'file-expansion-panel': i < detectorResult.length - 1}",
+			)
 			v-expansion-panel-header(color='grey lighten-4', ripple)
 				span(class='panel-header title font-weight-medium') {{ fileSmells.fileName }}
 			v-expansion-panel-content(class='pt-4')
-				base-smells-expansion-panels(v-if='fileSmells', :detectorResult='fileSmells')
-				p(v-else-if="fileSmells.error", class='title ma-0') {{ fileSmells.error }}
+				p(v-if="fileSmells.error", class='title font-weight-regular ma-0')
+					| Error! {{ fileSmells.error.message ? fileSmells.error.message : 'Code smells detection failed.' }}.
+				base-smells-expansion-panels(v-else, :detectorResult='fileSmells')
 
 </template>
 
