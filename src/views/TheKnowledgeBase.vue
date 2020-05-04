@@ -3,10 +3,9 @@
     <v-navigation-drawer width="400">
       <v-list dense nav class="py-0">
         <v-list-item two-line :class="miniVariant && 'px-0'">
-
           <v-list-item-content>
             <v-list-item-title class="list-header">Knowledge Base</v-list-item-title>
-            <v-list-item-subtitle>Availiable smells</v-list-item-subtitle>
+            <v-list-item-subtitle>Available smells</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
 
@@ -55,20 +54,25 @@ export default {
 		};
 	},
 	created () {
-		if (!this.$route.params.slug) {
-			this.mainPage = true;
-			return;
-		}
-		if (smells.some(smell => smell.slug === this.$route.params.slug)) {
-			this.fetchPageContent();
-		} else {
-			this.error = true;
-		}
+		this.initialize();
 	},
 	watch: {
-		$route: 'fetchPageContent',
+		$route: 'initialize',
 	},
 	methods: {
+		initialize () {
+			if (!this.$route.params.slug) {
+				this.mainPage = true;
+				this.content = null;
+				this.error = null;
+				return;
+			}
+			if (smells.some(smell => smell.slug === this.$route.params.slug)) {
+				this.fetchPageContent();
+			} else {
+				this.error = true;
+			}
+		},
 		fetchPageContent () {
 			this.error = this.content = null;
 			this.loading = true;
@@ -77,10 +81,12 @@ export default {
 				.then(res => {
 					this.loading = false;
 					this.content = res.data;
+					this.mainPage = false;
 				})
 				.catch(err => {
 					this.loading = false;
 					this.error = err;
+					this.mainPage = false;
 				});
 		},
 	},

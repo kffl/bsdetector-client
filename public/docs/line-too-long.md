@@ -5,5 +5,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sapien velit, a
 ## Sample occurrence
 
 ```javascript
-function name(a, b, c, d, e, f) {}
+function name(a, b, c, d, e, f) {
+	console.log(a);
+}
 ```
