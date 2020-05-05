@@ -15,8 +15,8 @@ describe('Code editor', () => {
 		cy.get('button')
 			.contains('Detect', { matchCase: false })
 			.click();
-		cy.get('button.v-expansion-panel-header')
-			.contains('TOO MANY PARAMETERS FOR A FUNCTION DECLARATION')
+		cy.get('.v-expansion-panel')
+			.contains('Too many parameters for a function declaration', { matchCase: false })
 			.click()
 			.get('.occurrence-container')
 			.should(($container) => {
