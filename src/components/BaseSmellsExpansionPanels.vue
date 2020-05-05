@@ -60,4 +60,8 @@ export default {
 	color: inherit;
 	box-shadow: none;
 }
+
+.occurrence-container .occurrence-snippet::before {
+	content: none;
+}
 </style>
