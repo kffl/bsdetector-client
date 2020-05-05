@@ -50,7 +50,7 @@ export default {
 		files: [],
 		fileInputRules: [
 			value => !!value.length || 'In order to run detection, it\'s required to provide some files.',
-			value => value.every(file => file.type === 'text/javascript') || 'Only JavaScript files are allowed.',
+			value => value.every(file => file.name.endsWith('.js')) || 'Only JavaScript files are allowed.',
 			value => value.length <= 10 || 'Limit of uploaded files equals 10.',
 		],
 		detectorResult: [],
