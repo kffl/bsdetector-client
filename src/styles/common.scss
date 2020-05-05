@@ -3,3 +3,8 @@
 	line-height: 18px;
 	white-space: pre-wrap;
 }
+
+// using copied value to reduce compilation time
+$colors__green-base: #4caf50;
+$colors__grey-lighten-3: #eeeeee;
+$common__filled-viewport-height: 116px; // sum of heights: v-app-bar, content padding, v-footer
