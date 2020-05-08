@@ -7,9 +7,8 @@ export const api = axios.create({
 	},
 });
 
-export const fetchContent = (slug) => (axios.create({
-	baseURL: `/docs/${slug}.md`,
-	headers: {
-		'content-type': 'application/json',
-	},
-}));
+const contentSource = axios.create({
+	baseURL: '/docs',
+});
+
+export const fetchContent = (slug) => (contentSource.get(`/${slug}.md`));
