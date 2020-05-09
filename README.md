@@ -33,3 +33,19 @@ npm run serve
 ```
 npm run build
 ```
+
+### Run tests
+
+#### Unit tests with Jest
+
+```
+npm run test:unit
+```
+
+#### E2E tests with Cypress
+
+```
+npx cypress run
+```
+
+Before running E2E tests, make sure that the app is served at the address specified in `cypress.json` (by default `http://lolcahost:8080`). Also ensure that the backend service is running at the address specified in `.env`.

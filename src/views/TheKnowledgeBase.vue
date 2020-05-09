@@ -32,7 +32,7 @@
 		</div>
 		<div v-if="mainPage && !loading">
 			<h1>Knowledge base</h1>
-			<p>Welcome to the knowledge base. Here you can find detailed explenations of code smells that are being detected in your code.</p>
+			<p>Welcome to the knowledge base. Here you can find detailed explanations of code smells that are being detected in your code.</p>
 		</div>
 	</v-container>
 </div>
@@ -94,7 +94,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 	.outer-container {
 		padding: 0;
 		height: 100%;
