@@ -4,7 +4,7 @@
 			div
 				h3(class='headline font-weight-regular text-center') Analyze public GitHub repository
 				h4(class='subtitle-1 font-weight-regular text-center grey--text text--darken-1') Provide the details of a repository you wish to detect smells in.
-				v-form(ref='form', class='mt-6 d-flex flex-column')
+				v-form(ref='form', class='mt-6 d-flex flex-column', @submit.native.prevent)
 					v-text-field(
 						v-model='username',
 						autofocus,

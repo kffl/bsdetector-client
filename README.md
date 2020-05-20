@@ -48,4 +48,4 @@ npm run test:unit
 npx cypress run
 ```
 
-Before running E2E tests, make sure that the app is served at the address specified in `cypress.json` (by default `http://lolcahost:8080`). Also ensure that the backend service is running at the address specified in `.env`.
+Before running E2E tests, make sure that the app is served at the address specified in `cypress.json` (by default `http://localhost:8080`). Also ensure that the backend service is running at the address specified in `.env`.
