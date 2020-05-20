@@ -1,15 +1,14 @@
 <template lang='pug'>
-- const cleanCodeMessage = 'No smells detected! Your code is clean.';
+- const cleanCodeMessage = 'No smells detected!';
 
 	v-expansion-panels(v-if='detectedSmells.length', multiple, hover, :value='expandedPanels')
 		v-expansion-panel(v-for='(smell, i) in detectedSmells', :key='i')
 			v-expansion-panel-header(color='grey lighten-5', ripple)
 				span(class='panel-header subtitle-1 font-weight-medium') {{ smell.smellMeta.title }}
 			v-expansion-panel-content
-				p(class='mt-2 mb-4 grey--text text--darken-1') {{ smell.smellMeta.description + " " }}
-				p(class='mt-2 mb-4 grey--text text--darken-1')
-					router-link(:to="'/knowledge-base/' + smell.smellMeta.slug") Learn more about this smell
-				h6(class='title font-weight-regular') Occurrences
+				p(class='mt-2 mb-2 grey--text text--darken-1') {{ smell.smellMeta.description }}
+				router-link(:to='`/knowledge-base/${smell.smellMeta.slug}`', target='_blank') Learn more about this smell.
+				h6(class='title font-weight-regular mt-3') Occurrences
 				v-card(v-for='(occurrence, j) in smell.occurrences', :key='j', class='occurrence-container grey lighten-4 px-2', outlined, tile)
 					code(class='occurrence-snippet font-weight-medium') {{ occurrence.snippet }}
 	v-card(v-else-if='!!detectorResult && useContainerForCleanCode')
