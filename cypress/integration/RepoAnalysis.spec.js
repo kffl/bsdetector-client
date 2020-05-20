@@ -9,7 +9,7 @@ describe('Repo analysis', () => {
 		cy.get('.v-input').contains('Username').parents().eq(2).find('input').type('kffl');
 		cy.get('.v-input').contains('Repository').parents().eq(2).find('input').type('bsdetector-client');
 		cy.get('button').contains('Detect', { matchCase: false }).click();
-		cy.get('.v-expansion-panels')
+		cy.get('.v-expansion-panels', { timeout: 20000 })
 			.contains('Line too long', { matchCase: false })
 			.get('.occurrence-container').should('have.descendants', 'code');
 	});

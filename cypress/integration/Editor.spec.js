@@ -15,7 +15,7 @@ describe('Code editor', () => {
 		cy.get('button')
 			.contains('Detect', { matchCase: false })
 			.click();
-		cy.get('.v-expansion-panels')
+		cy.get('.v-expansion-panels', { timeout: 20000 })
 			.contains('Too many parameters for a function declaration', { matchCase: false })
 			.click()
 			.get('.occurrence-container')
