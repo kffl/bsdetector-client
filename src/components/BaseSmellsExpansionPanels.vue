@@ -8,7 +8,7 @@
 			v-expansion-panel-content
 				p(class='mt-2 mb-4 grey--text text--darken-1') {{ smell.smellMeta.description + " " }}
 				p(class='mt-2 mb-4 grey--text text--darken-1')
-					router-link(:to="'/knowledge-base/' + smell.smellMeta.slug") Learn more abouth this smell
+					router-link(:to="'/knowledge-base/' + smell.smellMeta.slug") Learn more about this smell
 				h6(class='title font-weight-regular') Occurrences
 				v-card(v-for='(occurrence, j) in smell.occurrences', :key='j', class='occurrence-container grey lighten-4 px-2', outlined, tile)
 					code(class='occurrence-snippet font-weight-medium') {{ occurrence.snippet }}
