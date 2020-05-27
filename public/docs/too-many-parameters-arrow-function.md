@@ -1,9 +1,9 @@
 # Too many parameters for an arrow function declaration
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sapien velit, aliquet eget commodo nec, auctor a sapien. Nam eu neque vulputate diam rhoncus faucibus. Curabitur quis varius libero. Lorem.
+The maximum recommended number of parameters for an arrow function is: 4.
 
 ## Sample occurrence
 
 ```javascript
-function name(a, b, c, d, e, f) {}
+(par1, par2, par3, par4, par5) => { return 2;}
 ```

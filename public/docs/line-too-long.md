@@ -1,11 +1,12 @@
 # Line too long
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sapien velit, aliquet eget commodo nec, auctor a sapien. Nam eu neque vulputate diam rhoncus faucibus. Curabitur quis varius libero. Lorem.
+The maximum recommended number of chars per line is: 140.
 
 ## Sample occurrence
 
 ```javascript
-function name(a, b, c, d, e, f) {
-	console.log(a);
+if(SuperLongCondition1 && SuperLongCondition2 && SuperLongCondition3 && SuperLongCondition4 && SuperLongCondition5 && SuperLongCondition6 && SuperLongCondition7 && SuperLongCondition8) 
+{
+	counter = 0;
 }
 ```
