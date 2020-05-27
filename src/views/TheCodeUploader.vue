@@ -33,7 +33,7 @@
 
 		v-row(v-show='detectorResult.length', ref='smellsContainer', class='pt-12' justify='center', no-gutters)
 			v-col(class='d-flex flex-column', md='12', lg='11', xl='10')
-				h3(class='headline font-weight-regular mb-1') Detected code smells in files
+				h3(class='headline font-weight-regular mb-2') Detected code smells in files
 				base-files-smells-expansion-panels(:detectorResult='detectorResult')
 
 		base-snackbar(ref='snackbar')
