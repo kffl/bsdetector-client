@@ -75,7 +75,6 @@ const Smells = [
 			'Every variable and function identifier has to be unique within given scope',
 		slug: 'duplicated-identifier',
 	},
-	
 ];
 
 export default Smells;

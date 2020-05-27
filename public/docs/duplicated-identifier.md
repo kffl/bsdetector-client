@@ -1,6 +1,6 @@
 # Duplicated identifier 
 
-Every variable' and function' has to be unique within given scope.
+Every variable's and function's identifier has to be unique within given scope.
 
 ## Sample occurrence
 
