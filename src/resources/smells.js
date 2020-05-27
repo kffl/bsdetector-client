@@ -61,6 +61,21 @@ const Smells = [
 			'The maximum recommended number of parameters for an arrow function is: 5.',
 		slug: 'too-many-parameters-arrow-function',
 	},
+	{
+		name: 'VARIABLE_NOT_DECLARED ',
+		title: 'Variable used but not declared',
+		description:
+			'Every variable has to be declared before being used',
+		slug: 'variable-not-declared',
+	},
+	{
+		name: 'DUPLICATED_IDENTIFIER',
+		title: 'Duplicated identifier',
+		description:
+			'Every variable and function identifier has to be unique within given scope',
+		slug: 'duplicated-identifier',
+	},
+	
 ];
 
 export default Smells;
