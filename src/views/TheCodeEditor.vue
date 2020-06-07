@@ -27,13 +27,13 @@
 								#[h3 Alt-G]
 								Jump to line
 
-				codemirror(v-model='code', :options='codeMirrorOptions')
+				codemirror(ref='editor', v-model='code', class='code-editor-code-mirror' :options='codeMirrorOptions')
 				v-btn(color='green', dark, large, :loading='isLoading', @click='detectSmells') Detect code smells
 
 				div(v-show='!!detectorResult')
 					div(ref='smellsContainer', class='d-flex flex-column pt-12')
 						h3(class='headline font-weight-regular mb-1') Detected code smells
-						base-smells-expansion-panels(:detectorResult='detectorResult')
+						base-smells-expansion-panels(ref='smellsPanel', :detectorResult='detectorResult')
 
 			base-snackbar(ref='snackbar')
 </template>
@@ -50,7 +50,7 @@ export default {
 	data: () => ({
 		code: '',
 		codeMirrorOptions: {
-			tabSize: 4,
+			tabSize: 2,
 			mode: 'text/javascript',
 			extraKeys: {
 				'Ctrl-Space': 'autocomplete',
@@ -82,7 +82,19 @@ export default {
 
 			api.post('analyze', { code: this.code }).then(res => {
 				this.detectorResult = res.data;
-				this.$nextTick(() => { this.$refs.smellsContainer.scrollIntoView({ behavior: 'smooth' }); });
+				this.$nextTick(() => {
+					this.$refs.smellsContainer.scrollIntoView({ behavior: 'smooth' });
+					if (!this.$refs.smellsPanel.detectedSmells) return;
+					this.$refs.smellsPanel.detectedSmells.forEach((smell) => {
+						smell.occurrences.forEach((occurrence) => {
+							this.$refs.editor.codemirror.markText(
+								{ line: occurrence.lineStart - 1, ch: occurrence.colStart - 1 },
+								{ line: occurrence.lineEnd - 1, ch: occurrence.colEnd - 1 },
+								{ className: 'smell-highlight' },
+							);
+						});
+					});
+				});
 			}).catch(err => {
 				const data = err.response.data;
 				this.$refs.snackbar.show(`Error! ${data.message ? data.message : 'Code smells detection failed'}.`);
@@ -93,29 +105,29 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../styles/common';
+	.code-editor-code-mirror {
+		.CodeMirror {
+			height: calc(100vh - 220px);
+			margin-bottom: 24px;
+			border: 1px solid #ddd;
+			border-radius: 4px;
 
-.CodeMirror {
-	height: calc(100vh - 220px);
-	margin-bottom: 24px;
-	border: 1px solid #ddd;
-	border-radius: 4px;
+			&-focused {
+				border: 1px solid #999;
+			}
 
-	&-focused {
-		border: 1px solid #999;
+			&-selection-highlight-scrollbar {
+				background-color: #97e099;
+				opacity: 0.5;
+			}
+		}
+
+		.cm-matchhighlight {
+				background-color: #bbecbd;
+		}
 	}
 
-	&-selection-highlight-scrollbar {
-		background-color: #97e099;
-		opacity: 0.5;
+	.keybindings-content h3 {
+		margin-top: 8px;
 	}
-}
-
-.cm-matchhighlight {
-		background-color: #bbecbd;
-}
-
-.keybindings-content h3 {
-	margin-top: 8px;
-}
 </style>

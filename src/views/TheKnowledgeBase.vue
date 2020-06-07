@@ -1,40 +1,39 @@
 <template>
-  <div class="outer-container">
-    <v-navigation-drawer :permanent=true width="400">
-      <v-list dense nav class="py-0">
-			<v-list-item two-line >
-				<v-list-item-content>
-					<v-list-item-title class="list-header">Knowledge Base</v-list-item-title>
-					<v-list-item-subtitle>Available smells</v-list-item-subtitle>
-				</v-list-item-content>
-			</v-list-item>
+	<div class="outer-container">
+		<v-navigation-drawer permanent width="400">
+			<div class='mx-4 mb-2'>
+				<h3 class="title font-weight-medium">Knowledge Base</h3>
+				<h4 class='subtitle font-weight-regular'>Available smells</h4>
+			</div>
 
 			<v-divider></v-divider>
 
-			<v-list-item v-for="item in navSmells" :key="item.title" link :to='"/knowledge-base/" + item.slug'>
-				<v-list-item-content>
-					<v-list-item-title>{{ item.title }}</v-list-item-title>
-				</v-list-item-content>
-			</v-list-item>
-		</v-list>
-	</v-navigation-drawer>
-	<v-container class="content">
-		<p v-show="loading">
-			<v-progress-circular indeterminate color="red"></v-progress-circular>
-		</p>
-		<div v-if="error">
-			<h2>404</h2>
-			<p>The requested page was not found</p>
-			<v-btn to="/">Go back</v-btn>
-		</div>
-		<div v-else-if="content">
-			<vue-markdown v-bind:source="content" />
-		</div>
-		<div v-if="mainPage && !loading">
-			<h1>Knowledge base</h1>
-			<p>Welcome to the knowledge base. Here you can find detailed explanations of code smells that are being detected in your code.</p>
-		</div>
-	</v-container>
+			<v-list dense nav>
+				<v-list-item v-for="item in navSmells" :key="item.title" link :to='"/knowledge-base/" + item.slug'>
+					<v-list-item-content>
+						<v-list-item-title>{{ item.title }}</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
+			</v-list>
+		</v-navigation-drawer>
+
+		<v-container class="content">
+			<p v-show="loading">
+				<v-progress-circular indeterminate color="red"></v-progress-circular>
+			</p>
+			<div v-if="error">
+				<h2>404</h2>
+				<p>The requested page was not found</p>
+				<v-btn to="/">Go back</v-btn>
+			</div>
+			<div v-else-if="content">
+				<vue-markdown v-bind:source="content" />
+			</div>
+			<div v-if="mainPage && !loading">
+				<h1>Knowledge base</h1>
+				<p>Welcome to the knowledge base. Here you can find detailed explanations of code smells that are being detected in your code.</p>
+			</div>
+		</v-container>
 </div>
 </template>
 
@@ -100,19 +99,16 @@ export default {
 		height: 100%;
 		display: flex;
 	}
+
 	.content {
 		padding: 32px;
 	}
-	.list-header {
-		font-size: 1.6em;
-		line-height: 1.6em;
-	}
-</style>
-<style>
+
 	.content code::after, .content code::before {
 		content: none;
 	}
-	.content code, .content code{
+
+	.content code, .content code {
 		padding: 8px;
 		margin-top: 10px;
 		width: 100%;

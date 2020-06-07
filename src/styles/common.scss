@@ -1,9 +1,3 @@
-@mixin common__code {
-	font-family: Monospace;
-	line-height: 18px;
-	white-space: pre-wrap;
-}
-
 // using copied value to reduce compilation time
 $colors__green-base: #4caf50;
 $colors__grey-lighten-3: #eeeeee;
