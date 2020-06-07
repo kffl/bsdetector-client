@@ -1,5 +1,5 @@
 <template lang="pug">
-		v-app-bar(app, color='green', dark, dense)
+		v-app-bar(class='app-bar', app, color='green', dark, dense)
 			v-toolbar-title
 				router-link(to='/', class='toolbar-title') JavaScript Code Smells Detector
 			v-spacer
@@ -16,6 +16,10 @@ export default {
 </script>
 
 <style lang="scss">
+.app-bar {
+	z-index: 50 !important; // overlay codemirror elements
+}
+
 .toolbar-title {
 	color: white !important;
 	text-decoration: none;
