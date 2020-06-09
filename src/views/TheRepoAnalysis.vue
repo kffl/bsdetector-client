@@ -45,16 +45,19 @@ export default {
 	}),
 
 	methods: {
-		detectSmells () {
+		async detectSmells () {
 			if (!this.$refs.form.validate()) return;
 			this.isLoading = true;
 
 			api.post('analyzerepo', {
 				username: this.username,
 				reponame: this.repoName,
-			}).then(res => {
+			}).then(async res => {
+				this.detectorResult = []; // complete rerender is required for codemirror to work correctly
+				await this.$nextTick();
 				this.detectorResult = res.data;
-				this.$nextTick(() => { this.$refs.smellsContainer.scrollIntoView({ behavior: 'smooth' }); });
+				await this.$nextTick();
+				this.$refs.smellsContainer.scrollIntoView({ behavior: 'smooth' });
 			}).catch(err => {
 				const data = err.response.data;
 				this.$refs.snackbar.show(`Error! ${data.message ? data.message : 'Code smells detection failed'}.`);

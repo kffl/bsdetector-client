@@ -70,15 +70,18 @@ export default {
 			if (files.length) this.files = getUniqueFiles(this.files, files);
 		},
 
-		detectSmells () {
+		async detectSmells () {
 			if (!this.$refs.form.validate()) return;
 			this.isLoading = true;
 
 			const formData = new FormData();
 			this.files.forEach((file) => { formData.append('code', file); });
-			api.post('analyzemultipart', formData, { headers: { 'content-type': 'multipart/form-data' } }).then(res => {
+			api.post('analyzemultipart', formData, { headers: { 'content-type': 'multipart/form-data' } }).then(async res => {
+				this.detectorResult = []; // complete rerender is required for codemirror to work correctly
+				await this.$nextTick();
 				this.detectorResult = res.data;
-				this.$nextTick(() => { this.$refs.smellsContainer.scrollIntoView({ behavior: 'smooth' }); });
+				await this.$nextTick();
+				this.$refs.smellsContainer.scrollIntoView({ behavior: 'smooth' });
 			}).catch(err => {
 				const data = err.response.data;
 				this.$refs.snackbar.show(`Error! ${data.message ? data.message : 'Code smells detection failed'}.`);

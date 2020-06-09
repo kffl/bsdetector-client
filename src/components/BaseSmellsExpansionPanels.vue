@@ -4,7 +4,7 @@
 		p(class='body-2 grey--text text--darken-5', :class="numberOfDetectedSmells ? 'mb-2' : 'mb-0'")
 			template(v-if='numberOfDetectedSmells')
 				| Number of detected code smells - {{ numberOfDetectedSmells }}, lines analyzed - {{ detectorResult.linesAnalyzed }}
-			template(v-else) Number of analyzed lines - {{ detectorResult.linesAnalyzed }}
+			template(v-else-if='!!detectorResult') Number of analyzed lines - {{ detectorResult.linesAnalyzed }}
 		v-expansion-panels(v-if='detectedSmells.length', multiple, hover, :value='expandedPanels')
 			v-expansion-panel(v-for='(smell, i) in detectedSmells', :key='i')
 				v-expansion-panel-header(color='grey lighten-5', ripple)
