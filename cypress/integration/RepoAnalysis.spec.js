@@ -11,6 +11,7 @@ describe('Repo analysis', () => {
 		cy.get('button').contains('Detect', { matchCase: false }).click();
 		cy.get('.v-expansion-panels', { timeout: 20000 })
 			.contains('Line too long', { matchCase: false })
-			.get('.occurrence-container').should('have.descendants', 'code');
+			.parent()
+			.should('have.descendants', '.vue-codemirror');
 	});
 });
