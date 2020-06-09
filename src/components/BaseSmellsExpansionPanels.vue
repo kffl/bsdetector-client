@@ -7,10 +7,16 @@
 				span(class='panel-header subtitle-1 font-weight-medium') {{ smell.smellMeta.title }}
 			v-expansion-panel-content
 				p(class='mt-2 mb-2 grey--text text--darken-1') {{ smell.smellMeta.description }}
-				router-link(:to='`/knowledge-base/${smell.smellMeta.slug}`', target='_blank') Learn more about this smell.
+				router-link(:to='`/knowledge-base/${smell.smellMeta.slug}`', target='_blank') Learn more about this smell
 				h6(class='title font-weight-regular mt-3') Occurrences
-				v-card(v-for='(occurrence, j) in smell.occurrences', :key='j', class='occurrence-container grey lighten-4 px-2', outlined, tile)
-					code(class='occurrence-snippet font-weight-medium') {{ occurrence.snippet }}
+				codemirror(
+					ref='snippets',
+					v-for='(occurrence, j) in smell.occurrences',
+					:key='j',
+					class='smells-code-mirror',
+					:value='occurrence.snippet',
+					:options='snippetCodeMirrorOptions'
+					)
 	v-card(v-else-if='!!detectorResult && useContainerForCleanCode')
 		v-card-text(class='title font-weight-regular text--primary')= cleanCodeMessage
 	p(v-else-if='!!detectorResult', class='title font-weight-regular ma-0')= cleanCodeMessage
@@ -33,6 +39,16 @@ export default {
 		},
 	},
 
+	data: () => ({
+		snippetCodeMirrorOptions: {
+			tabSize: 2,
+			mode: 'text/javascript',
+			lineNumbers: true,
+			readOnly: 'nocursor',
+			scrollbarStyle: 'simple',
+		},
+	}),
+
 	computed: {
 		detectedSmells: function () {
 			var result = this.detectorResult ? this.detectorResult.smellsDetected.filter((smell) => smell.occurrences.length) : [];
@@ -42,30 +58,49 @@ export default {
 			return [...Array(this.detectedSmells.length).keys()];
 		},
 	},
+
+	watch: {
+		detectedSmells: {
+			deep: true,
+			immediate: true,
+			handler: function () {
+				const snippets = this.detectedSmells.reduce((acc, smell) => [...acc, ...smell.occurrences], []);
+				this.$nextTick(() => {
+					if (!this.$refs.snippets || !snippets.length) return;
+					this.$refs.snippets.forEach((snippet, i) => {
+						snippet.codemirror.setOption('firstLineNumber', snippets[i].lineStart);
+						snippet.codemirror.markText(
+							{ line: 0, ch: snippets[i].colStart - 1 },
+							{ line: snippets[i].lineEnd - snippets[i].lineStart, ch: snippets[i].colEnd - 1 },
+							{ className: 'smell-highlight' },
+						);
+					});
+				});
+			},
+		},
+	},
 };
 </script>
 
 <style lang="scss">
-@import '../styles/common';
-
 .panel-header {
 	text-transform: uppercase;
 }
 
-.occurrence-container + .occurrence-container {
-	margin-top: 12px;
+.smells-code-mirror {
+	.CodeMirror {
+		background: #fcfcfc;
+		height: auto;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+	}
+
+	& + & {
+		margin-top: 12px;
+	}
 }
 
-.occurrence-container .occurrence-snippet {
-	@include common__code;
-
-	width: 100%;
-	background: none;
-	color: inherit;
-	box-shadow: none;
-}
-
-.occurrence-container .occurrence-snippet::before {
-	content: none;
+.smell-highlight {
+	background-color: #ffdada;
 }
 </style>
