@@ -10,7 +10,7 @@
 				router-link(:to='`/knowledge-base/${smell.smellMeta.slug}`', target='_blank') Learn more about this smell
 				h6(class='title font-weight-regular mt-3') Occurrences
 				codemirror(
-					ref='snippets',
+					ref='codeMirrorSnippets',
 					v-for='(occurrence, j) in smell.occurrences',
 					:key='j',
 					class='smells-code-mirror',
@@ -64,14 +64,14 @@ export default {
 			deep: true,
 			immediate: true,
 			handler: function () {
-				const snippets = this.detectedSmells.reduce((acc, smell) => [...acc, ...smell.occurrences], []);
+				const occurrences = this.detectedSmells.reduce((acc, smell) => [...acc, ...smell.occurrences], []);
 				this.$nextTick(() => {
-					if (!this.$refs.snippets || !snippets.length) return;
-					this.$refs.snippets.forEach((snippet, i) => {
-						snippet.codemirror.setOption('firstLineNumber', snippets[i].lineStart);
+					if (!this.$refs.codeMirrorSnippets || !occurrences.length) return;
+					this.$refs.codeMirrorSnippets.forEach((snippet, i) => {
+						snippet.codemirror.setOption('firstLineNumber', occurrences[i].lineStart);
 						snippet.codemirror.markText(
-							{ line: 0, ch: snippets[i].colStart - 1 },
-							{ line: snippets[i].lineEnd - snippets[i].lineStart, ch: snippets[i].colEnd - 1 },
+							{ line: 0, ch: occurrences[i].colStart - 1 },
+							{ line: occurrences[i].lineEnd - occurrences[i].lineStart, ch: occurrences[i].colEnd - 1 },
 							{ className: 'smell-highlight' },
 						);
 					});

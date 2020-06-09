@@ -62,7 +62,7 @@ const Smells = [
 		slug: 'too-many-parameters-arrow-function',
 	},
 	{
-		name: 'VARIABLE_NOT_DECLARED ',
+		name: 'VARIABLE_NOT_DECLARED',
 		title: 'Variable used but not declared',
 		description:
 			'Every variable has to be declared before being used',
