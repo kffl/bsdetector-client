@@ -67,10 +67,11 @@ export default {
 		detectorResult: null,
 		isLoading: false,
 		helperDialog: false,
+		smellHighlights: [],
 	}),
 
 	methods: {
-		detectSmells () {
+		async detectSmells () {
 			if (!this.code) {
 				this.$refs.snackbar.show('Error! In order to run detection, it\'s required to provide code.');
 				return;
@@ -80,21 +81,20 @@ export default {
 			}
 			this.isLoading = true;
 
-			api.post('analyze', { code: this.code }).then(res => {
+			api.post('analyze', { code: this.code }).then(async res => {
+				this.smellHighlights.forEach((highlight) => { highlight.clear(); });
+				this.smellHighlights = [];
+				this.detectorResult = null; // complete rerender is required for codemirror to work correctly
+				await this.$nextTick();
 				this.detectorResult = res.data;
-				this.$nextTick(() => {
-					this.$refs.smellsContainer.scrollIntoView({ behavior: 'smooth' });
-					if (!this.$refs.smellsPanel.detectedSmells) return;
-					this.$refs.smellsPanel.detectedSmells.forEach((smell) => {
-						smell.occurrences.forEach((occurrence) => {
-							this.$refs.editor.codemirror.markText(
-								{ line: occurrence.lineStart - 1, ch: occurrence.colStart - 1 },
-								{ line: occurrence.lineEnd - 1, ch: occurrence.colEnd - 1 },
-								{ className: 'smell-highlight' },
-							);
-						});
-					});
-				});
+				await this.$nextTick();
+				this.$refs.smellsContainer.scrollIntoView({ behavior: 'smooth' });
+				this.detectorResult.smellsDetected.forEach((smell) =>
+					this.smellHighlights.push(...smell.occurrences.map((occurrence) => this.$refs.editor.codemirror.markText(
+						{ line: occurrence.lineStart - 1, ch: occurrence.colStart - 1 },
+						{ line: occurrence.lineEnd - 1, ch: occurrence.colEnd - 1 },
+						{ className: 'smell-highlight' },
+					))));
 			}).catch(err => {
 				const data = err.response.data;
 				this.$refs.snackbar.show(`Error! ${data.message ? data.message : 'Code smells detection failed'}.`);
