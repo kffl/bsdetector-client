@@ -12,7 +12,7 @@
 </template>
 
 <script>
-// import { api } from '../axios';
+import { api } from '../axios';
 import VueOdometer from 'vue-odometer';
 import 'odometer/themes/odometer-theme-default.css';
 
@@ -32,23 +32,15 @@ export default {
 	}),
 
 	mounted () {
-		// TODO: use code similar to the one below to fetch statistics from server.
-
-		// api.get('stats').then(res => {
-		// 		this.stats.analyzedLines = res.data.analyzedLines;
-		// 		this.stats.detectedSmells = res.data.detectedSmells;
-		// 		this.stats.analyzedFiles = res.data.analyzedFiles;
-		// 		this.stats.analyzedRepos = res.data.analyzedRepos;
-		// }).catch(err => {
-		// 	const data = err.response.data;
-		// 	this.$refs.snackbar.show(`Error! ${data.message ? data.message : 'Code smells detection failed'}.`);
-		// });
-
-		// TODO: remove. for testing purposes.
-		this.stats.analyzedLines.value = 1100;
-		this.stats.detectedSmells.value = 1000;
-		this.stats.analyzedFiles.value = 900;
-		this.stats.analyzedRepos.value = 800;
+		api.get('stats').then(res => {
+			this.stats.analyzedLines.value = res.data.lines;
+			this.stats.detectedSmells.value = res.data.smells;
+			this.stats.analyzedFiles.value = res.data.files;
+			this.stats.analyzedRepos.value = res.data.repos;
+		}).catch(err => {
+			const data = err.response.data;
+			this.$refs.snackbar.show(`Error! ${data.message ? data.message : 'Could not fetch statistics'}.`);
+		});
 	},
 };
 </script>
