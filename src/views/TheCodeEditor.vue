@@ -33,7 +33,7 @@
 				div(v-show='!!detectorResult')
 					div(ref='smellsContainer', class='d-flex flex-column pt-12')
 						h3(class='headline font-weight-regular mb-1') Detected code smells
-						base-smells-expansion-panels(ref='smellsPanel', :detectorResult='detectorResult')
+						base-smells-expansion-panels(:detectorResult='detectorResult')
 
 			base-snackbar(ref='snackbar')
 </template>
