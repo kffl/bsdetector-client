@@ -1,9 +1,3 @@
-let x = 1;
-let x = 2;
-function x(){}
-function foo(x){}
-function foo(){ let x = 3;}
-
 sample = 1;
 let sample = 2;
 

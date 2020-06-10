@@ -51,14 +51,14 @@ const Smells = [
 		name: 'TOO_MANY_PARAMS_FUNCTION',
 		title: 'Too many parameters for a function declaration',
 		description:
-			'The maximum recommended number of parameters for an arrow function is: 4.',
+			'The maximum recommended number of parameters for a regular function is: 5.',
 		slug: 'too-many-parameters-function',
 	},
 	{
 		name: 'TOO_MANY_PARAMS_ARROW',
 		title: 'Too many parameters for an arrow function',
 		description:
-			'The maximum recommended number of parameters for an arrow function is: 5.',
+			'The maximum recommended number of parameters for an arrow function is: 4.',
 		slug: 'too-many-parameters-arrow-function',
 	},
 	{
@@ -67,13 +67,6 @@ const Smells = [
 		description:
 			'Every variable has to be declared before being used',
 		slug: 'variable-not-declared',
-	},
-	{
-		name: 'DUPLICATED_IDENTIFIER',
-		title: 'Duplicated identifier',
-		description:
-			'Every variable and function identifier has to be unique within given scope',
-		slug: 'duplicated-identifier',
 	},
 ];
 
